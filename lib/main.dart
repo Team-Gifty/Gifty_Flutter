@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/presentation/onboarding/onboarding_page.dart';
+import 'package:gifty_flutter/core/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-        home:
-          OnboardingPage()
+      title: 'Gifty Flutter',
+      theme: AppTheme.lightTheme,
+      home: OnboardingPage(),
     );
   }
 }
