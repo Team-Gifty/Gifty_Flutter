@@ -39,7 +39,7 @@ class _NicknamePageState extends State<NicknamePage> {
           children: [
             const SizedBox(height: 320),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 49.0),
+              padding: EdgeInsets.symmetric(horizontal: 45.0),
               child: Text(
                 '사용하실 닉네임을 입력해주세요!',
                 textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class _NicknamePageState extends State<NicknamePage> {
             ),
             const SizedBox(height: 40),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 49.0),
+              padding: const EdgeInsets.symmetric(horizontal: 105.0),
               child: GiftyTextField(
                 controller: _textController,
                 hintText: '닉네임 입력',
