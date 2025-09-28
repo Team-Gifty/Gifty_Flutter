@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gifty_flutter/presentation/onboarding/onboarding_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
         home:
-          Image.asset('../assets/test')
+          OnboardingPage()
     );
   }
 }
