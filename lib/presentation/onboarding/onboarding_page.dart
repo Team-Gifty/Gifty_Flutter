@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/theme.dart';
+import 'package:gifty_flutter/presentation/nickname/nickname_page.dart';
 import 'package:gifty_flutter/presentation/widgets/gifty_button.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -42,7 +43,12 @@ class OnboardingPage extends StatelessWidget {
             right: 24,
             child: GiftyButton(
               buttonText: 'Gifty 사용하러 가기',
-              buttonTap: () {},
+              buttonTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NicknamePage()),
+                );
+              },
             ),
           ),
         ],

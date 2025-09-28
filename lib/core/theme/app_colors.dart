@@ -17,6 +17,9 @@ class AppColors {
   /// 미들톡 문구 - 7F7D7D
   static const Color middleTalk = Color(0xFF7F7D7D);
 
+  /// 힌트 텍스트 - B1A4A4
+  static const Color hintText = Color(0xFFB1A4A4);
+
   /// 입력 후 버튼 문구 - A98E5C
   static const Color inputAfterButton = Color(0xFFA98E5C);
 
