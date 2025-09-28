@@ -42,23 +42,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 32.0),
-        child: BottomAppBar(
-          color: AppColors.background,
-          elevation: 0,
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildNavItem(0, 'assets/images/homeImage.svg'),
-                const SizedBox(width: 90),
-                _buildNavItem(1, 'assets/images/plusImage.svg'),
-                const SizedBox(width: 90),
-                _buildNavItem(2, 'assets/images/searchImage.svg'),
-              ],
-            ),
+      bottomNavigationBar: BottomAppBar(
+        color: AppColors.background,
+        elevation: 0,
+        child: SizedBox(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _buildNavItem(0, 'assets/images/homeImage.svg'),
+              const SizedBox(width: 90),
+              _buildNavItem(1, 'assets/images/plusImage.svg'),
+              const SizedBox(width: 90),
+              _buildNavItem(2, 'assets/images/searchImage.svg'),
+            ],
           ),
         ),
       ),
