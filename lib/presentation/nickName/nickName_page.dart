@@ -9,13 +9,10 @@ class NicknamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 49.0),
+        padding: const EdgeInsets.symmetric(horizontal: 42.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 320),
             const Text(
@@ -26,7 +23,7 @@ class NicknamePage extends StatelessWidget {
                 fontSize: 25,
               ),
             ),
-            const SizedBox(height: 40), // Spacing between title and text field
+            const SizedBox(height: 40),
             const GiftyTextField(
               hintText: '닉네임 입력',
               textAlign: TextAlign.center,
