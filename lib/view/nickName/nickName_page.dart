@@ -1,38 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
-import 'package:gifty_flutter/presentation/Home/Home_page.dart';
-import 'package:gifty_flutter/presentation/widgets/gifty_button.dart';
-import 'package:gifty_flutter/presentation/widgets/gifty_text_field.dart';
+import 'package:gifty_flutter/view/Home/Home_page.dart';
+import 'package:gifty_flutter/view/widgets/gifty_button.dart';
+import 'package:gifty_flutter/view/widgets/gifty_text_field.dart';
+import 'package:gifty_flutter/view_model/nickname_view_model.dart';
+import 'package:provider/provider.dart';
 
-class NicknamePage extends StatefulWidget {
+class NicknamePage extends StatelessWidget {
   const NicknamePage({super.key});
 
   @override
-  State<NicknamePage> createState() => _NicknamePageState();
-}
-
-class _NicknamePageState extends State<NicknamePage> {
-  final _textController = TextEditingController();
-  bool _isButtonEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _textController.addListener(() {
-      setState(() {
-        _isButtonEnabled = _textController.text.isNotEmpty;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<NicknameViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -54,7 +34,7 @@ class _NicknamePageState extends State<NicknamePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 105.0),
               child: GiftyTextField(
-                controller: _textController,
+                controller: viewModel.textController,
                 hintText: '닉네임 입력',
                 textAlign: TextAlign.center,
               ),
@@ -66,7 +46,7 @@ class _NicknamePageState extends State<NicknamePage> {
               margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),
               child: GiftyButton(
                 buttonText: '저장',
-                isEnabled: _isButtonEnabled,
+                isEnabled: viewModel.isButtonEnabled,
                 buttonTap: () {
                   Navigator.push(
                     context,

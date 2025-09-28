@@ -1,17 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
+import 'package:gifty_flutter/view_model/home_view_model.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     Center(
@@ -31,17 +25,13 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<HomeViewModel>(context);
+
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: _widgetOptions.elementAt(viewModel.selectedIndex),
       bottomNavigationBar: BottomAppBar(
         color: AppColors.background,
         elevation: 0,
@@ -50,11 +40,11 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildNavItem(0, 'assets/images/homeImage.svg'),
+              _buildNavItem(viewModel, 0, 'assets/images/homeImage.svg'),
               const SizedBox(width: 90),
-              _buildNavItem(1, 'assets/images/plusImage.svg'),
+              _buildNavItem(viewModel, 1, 'assets/images/plusImage.svg'),
               const SizedBox(width: 90),
-              _buildNavItem(2, 'assets/images/searchImage.svg'),
+              _buildNavItem(viewModel, 2, 'assets/images/searchImage.svg'),
             ],
           ),
         ),
@@ -62,20 +52,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildNavItem(int index, String assetName) {
+  Widget _buildNavItem(HomeViewModel viewModel, int index, String assetName) {
     return IconButton(
       icon: SvgPicture.asset(
         assetName,
         width: 25,
         height: 25,
         colorFilter: ColorFilter.mode(
-          _selectedIndex == index
+          viewModel.selectedIndex == index
               ? AppColors.selectedTab
               : AppColors.unselectedTab,
           BlendMode.srcIn,
         ),
       ),
-      onPressed: () => _onItemTapped(index),
+      onPressed: () => viewModel.onItemTapped(index),
     );
   }
 }

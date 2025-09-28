@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/theme.dart';
-import 'package:gifty_flutter/presentation/nickname/nickname_page.dart';
-import 'package:gifty_flutter/presentation/widgets/gifty_button.dart';
+import 'package:gifty_flutter/view/widgets/gifty_button.dart';
+import 'package:gifty_flutter/view_model/onboarding_view_model.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<OnboardingViewModel>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Stack(
@@ -44,10 +47,7 @@ class OnboardingPage extends StatelessWidget {
             child: GiftyButton(
               buttonText: 'Gifty 사용하러 가기',
               buttonTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NicknamePage()),
-                );
+                viewModel.navigateToNicknamePage(context);
               },
             ),
           ),
