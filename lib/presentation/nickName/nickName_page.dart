@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
+import 'package:gifty_flutter/presentation/Home/Home_page.dart';
 import 'package:gifty_flutter/presentation/widgets/gifty_button.dart';
 import 'package:gifty_flutter/presentation/widgets/gifty_text_field.dart';
 
@@ -67,7 +68,10 @@ class _NicknamePageState extends State<NicknamePage> {
                 buttonText: '저장',
                 isEnabled: _isButtonEnabled,
                 buttonTap: () {
-                  // Handle save action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
                 },
               ),
             ),
