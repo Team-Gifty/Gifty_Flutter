@@ -52,6 +52,11 @@ class _GiftyTextFieldState extends State<GiftyTextField> {
       focusNode: _focusNode,
       controller: widget.controller,
       textAlign: widget.textAlign,
+      style: const TextStyle(
+        fontFamily: 'MemomentKkukkkuk',
+        fontSize: 20,
+        color: AppColors.selectedTab,
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.background,
