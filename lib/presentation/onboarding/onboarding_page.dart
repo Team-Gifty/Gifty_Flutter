@@ -10,20 +10,12 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(
-          'Gifty Flutter',
-          style: AppTextStyles.h5.copyWith(color: AppColors.selectedTab),
-        ),
-        backgroundColor: AppColors.background,
-        elevation: 0,
-      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
           Positioned(
             left: 138,
-            top: 221,
+            top: 221, // 맨 위에서 221로 변경
             child: SvgPicture.asset(
               'assets/images/qwerimage.svg',
               width: 113,
@@ -45,21 +37,11 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 100,
+            bottom: 39,
             left: 24,
             right: 24,
             child: GiftyButton(
-              buttonText: '활성화 버튼',
-              buttonTap: () {},
-            ),
-          ),
-          Positioned(
-            bottom: 40,
-            left: 24,
-            right: 24,
-            child: GiftyButton(
-              buttonText: '비활성화 버튼',
-              isEnabled: false,
+              buttonText: 'Gifty 사용하러 가기',
               buttonTap: () {},
             ),
           ),
