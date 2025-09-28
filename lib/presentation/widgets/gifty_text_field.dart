@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 
-class GiftyTextField extends StatelessWidget {
+class GiftyTextField extends StatefulWidget {
   final String hintText;
   final TextAlign textAlign;
   final TextEditingController? controller;
@@ -14,14 +14,48 @@ class GiftyTextField extends StatelessWidget {
   });
 
   @override
+  State<GiftyTextField> createState() => _GiftyTextFieldState();
+}
+
+class _GiftyTextFieldState extends State<GiftyTextField> {
+  final FocusNode _focusNode = FocusNode();
+  String _currentHintText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _currentHintText = widget.hintText;
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        setState(() {
+          _currentHintText = '';
+        });
+      } else {
+        if (widget.controller == null || widget.controller!.text.isEmpty) {
+          setState(() {
+            _currentHintText = widget.hintText;
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller, // Pass the controller
-      textAlign: textAlign,
+      focusNode: _focusNode,
+      controller: widget.controller,
+      textAlign: widget.textAlign,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.background,
-        hintText: hintText,
+        hintText: _currentHintText,
         hintStyle: const TextStyle(
           fontFamily: 'MemomentKkukkkuk',
           fontSize: 20,

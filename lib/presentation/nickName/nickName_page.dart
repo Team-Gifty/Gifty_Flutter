@@ -34,28 +34,35 @@ class _NicknamePageState extends State<NicknamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 49.0),
+      body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 271), // Adjusted height to make space for button
-            const Text(
-              '사용하실 닉네임을 입력해주세요!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'MemomentKkukkkuk',
-                fontSize: 25,
+            const SizedBox(height: 320),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 49.0),
+              child: Text(
+                '사용하실 닉네임을 입력해주세요!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'MemomentKkukkkuk',
+                  fontSize: 25,
+                ),
               ),
             ),
             const SizedBox(height: 40),
-            GiftyTextField(
-              controller: _textController,
-              hintText: '닉네임 입력',
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(), // Pushes the button to the bottom
             Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 49.0),
+              child: GiftyTextField(
+                controller: _textController,
+                hintText: '닉네임 입력',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const Spacer(),
+            Container(
+              width: 340,
+              height: 50,
+              margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),
               child: GiftyButton(
                 buttonText: '저장',
                 isEnabled: _isButtonEnabled,
