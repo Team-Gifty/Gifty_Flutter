@@ -4,20 +4,23 @@ import 'package:gifty_flutter/core/theme/app_colors.dart';
 class GiftyTextField extends StatelessWidget {
   final String hintText;
   final TextAlign textAlign;
+  final TextEditingController? controller;
 
   const GiftyTextField({
     super.key,
     required this.hintText,
-    this.textAlign = TextAlign.start, // Default to start
+    this.textAlign = TextAlign.start,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      textAlign: textAlign, // Apply text alignment
+      controller: controller, // Pass the controller
+      textAlign: textAlign,
       decoration: InputDecoration(
-        filled: true, // Set filled to true
-        fillColor: AppColors.background, // Set the background color
+        filled: true,
+        fillColor: AppColors.background,
         hintText: hintText,
         hintStyle: const TextStyle(
           fontFamily: 'MemomentKkukkkuk',
@@ -36,7 +39,6 @@ class GiftyTextField extends StatelessWidget {
             width: 2.0,
           ),
         ),
-        // To create space between the text/hint and the underline
         contentPadding: const EdgeInsets.only(bottom: 8.0),
       ),
       cursorColor: AppColors.selectedTab,
