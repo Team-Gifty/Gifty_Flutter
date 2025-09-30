@@ -91,6 +91,14 @@ class HomePage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFFF7EAD8),
                     borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFCBBDB1),
+                        offset: const Offset(0, 4),
+                        blurRadius: 4,
+                        spreadRadius: 0,
+                      ),
+                    ],
                   ),
                   child: viewModel.image == null
                       ? const Center(
@@ -113,6 +121,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+
               const SizedBox(height: 25),
               GiftyButton(
                 buttonText: '정보 작성하기',
