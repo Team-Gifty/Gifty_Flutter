@@ -32,6 +32,12 @@ class HomeViewModel with ChangeNotifier {
   DateTime? get expiryDate => _expiryDate;
   bool get isExpiryDateSelected => _expiryDate != null;
 
+  bool get isRegistrationReady =>
+      _image != null &&
+      _isGiftNameEntered &&
+      _isUsageEntered &&
+      isExpiryDateSelected;
+
   HomeViewModel(this.realm) {
     _user = realm.all<User>().firstOrNull;
     _userSubscription = realm.all<User>().changes.listen((changes) {

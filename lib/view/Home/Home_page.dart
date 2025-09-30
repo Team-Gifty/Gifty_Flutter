@@ -5,6 +5,7 @@ import 'package:gifty_flutter/view/widgets/gifty_text_field.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:gifty_flutter/view/widgets/gifty_button.dart';
+import 'package:gifty_flutter/view/Home/widgets/gift_info_bottom_sheet.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -136,12 +137,10 @@ class HomePage extends StatelessWidget {
                     builder: (BuildContext _) {
                       return ChangeNotifierProvider.value(
                         value: viewModel,
-                        child: _buildBottomSheetContent(context),
+                        child: const GiftInfoBottomSheet(),
                       );
                     },
-                  ).whenComplete(() {
-                    viewModel.resetBottomSheetStep();
-                  });
+                  );
                 },
               ),
               const SizedBox(height: 16),
@@ -149,7 +148,7 @@ class HomePage extends StatelessWidget {
                 buttonText: '등록',
                 backgroundColor: AppColors.inputAfterButtonBg,
                 borderRadius: 12,
-                isEnabled: false,
+                isEnabled: viewModel.isRegistrationReady,
                 buttonTap: () {
                   // TODO: Implement registration
                 },
@@ -161,149 +160,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomSheetContent(BuildContext context) {
-    return Consumer<HomeViewModel>(
-      builder: (context, viewModel, child) {
-        String title;
-        Widget mainContent;
-        Widget button;
 
-        switch (viewModel.bottomSheetStep) {
-          case 0:
-            title = '교환권 이름(상품명)을 알려주세요!';
-            mainContent = GiftyTextField(
-              hintText: '여기에 입력하세요',
-              textAlign: TextAlign.center,
-              controller: viewModel.giftNameController,
-            );
-            button = GiftyButton(
-              buttonText: '확인',
-              isEnabled: viewModel.isGiftNameEntered,
-              buttonTap: viewModel.nextBottomSheetStep,
-              height: 50,
-            );
-            break;
-          case 1:
-            title = '어디서 사용하나요?';
-            mainContent = GiftyTextField(
-              hintText: '여기에 입력하세요',
-              textAlign: TextAlign.center,
-              controller: viewModel.usageController,
-            );
-            button = GiftyButton(
-              buttonText: '확인',
-              isEnabled: viewModel.isUsageEntered,
-              buttonTap: viewModel.nextBottomSheetStep,
-              height: 50,
-            );
-            break;
-          case 2:
-            title = '언제까지 써야하나요?';
-            mainContent = ElevatedButton(
-              child: Text(viewModel.expiryDate == null
-                  ? '날짜 선택'
-                  : '${viewModel.expiryDate!.year}/${viewModel.expiryDate!.month}/${viewModel.expiryDate!.day}'),
-              onPressed: () async {
-                final DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: viewModel.expiryDate ?? DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2101),
-                );
-                if (picked != null && picked != viewModel.expiryDate) {
-                  viewModel.setExpiryDate(picked);
-                }
-              },
-            );
-            button = GiftyButton(
-              buttonText: '확인',
-              isEnabled: viewModel.isExpiryDateSelected,
-              buttonTap: viewModel.nextBottomSheetStep,
-              height: 50,
-            );
-            break;
-          case 3:
-            title = '필요시, 메모를 작성해주세요 :)';
-            mainContent = GiftyTextField(
-              hintText: '여기에 입력하세요',
-              textAlign: TextAlign.center,
-              controller: viewModel.memoController,
-            );
-            button = GiftyButton(
-              buttonText: '완료',
-              isEnabled: true,
-              buttonTap: () {
-                // TODO: Save all the data
-                Navigator.pop(context);
-              },
-              height: 50,
-            );
-            break;
-          default:
-            title = '';
-            mainContent = const SizedBox.shrink();
-            button = const SizedBox.shrink();
-        }
-
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 40, left: 30, right: 45),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 상단 타이틀 + 뒤로가기
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (viewModel.bottomSheetStep == 0) {
-                          Navigator.pop(context);
-                        } else {
-                          viewModel.previousBottomSheetStep();
-                        }
-                      },
-                      child: SvgPicture.asset(
-                        'assets/images/backButton.svg',
-                        width: 33,
-                        height: 20.5,
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontFamily: 'OngeulipParkDahyeon',
-                          fontSize: 25,
-                          color: Color(0xFF6A4C4C),
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-
-                // 제목과 mainContent 사이 간격 76
-                const SizedBox(height: 76),
-
-                // 메인 입력 위젯
-                mainContent,
-
-                const Spacer(),
-
-                // 버튼 하단 고정
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 33.0),
-                  child: SizedBox(width: double.infinity, child: button),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   Widget _buildSearchWidget() {
     return const Center(
