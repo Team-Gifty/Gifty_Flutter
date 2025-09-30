@@ -38,7 +38,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-
         Center(
           child: Stack(
             alignment: Alignment.center,
@@ -168,14 +167,11 @@ class HomePage extends StatelessWidget {
               textAlign: TextAlign.center,
               controller: viewModel.giftNameController,
             );
-            button = SizedBox(
-              width: double.infinity,
-              child: GiftyButton(
-                buttonText: '확인',
-                isEnabled: viewModel.isGiftNameEntered,
-                buttonTap: viewModel.nextBottomSheetStep,
-                height: 50,
-              ),
+            button = GiftyButton(
+              buttonText: '확인',
+              isEnabled: viewModel.isGiftNameEntered,
+              buttonTap: viewModel.nextBottomSheetStep,
+              height: 50,
             );
             break;
           case 1:
@@ -185,14 +181,11 @@ class HomePage extends StatelessWidget {
               textAlign: TextAlign.center,
               controller: viewModel.usageController,
             );
-            button = SizedBox(
-              width: double.infinity,
-              child: GiftyButton(
-                buttonText: '확인',
-                isEnabled: viewModel.isUsageEntered,
-                buttonTap: viewModel.nextBottomSheetStep,
-                height: 50,
-              ),
+            button = GiftyButton(
+              buttonText: '확인',
+              isEnabled: viewModel.isUsageEntered,
+              buttonTap: viewModel.nextBottomSheetStep,
+              height: 50,
             );
             break;
           case 2:
@@ -213,14 +206,11 @@ class HomePage extends StatelessWidget {
                 }
               },
             );
-            button = SizedBox(
-              width: double.infinity,
-              child: GiftyButton(
-                buttonText: '확인',
-                isEnabled: viewModel.isExpiryDateSelected,
-                buttonTap: viewModel.nextBottomSheetStep,
-                height: 50,
-              ),
+            button = GiftyButton(
+              buttonText: '확인',
+              isEnabled: viewModel.isExpiryDateSelected,
+              buttonTap: viewModel.nextBottomSheetStep,
+              height: 50,
             );
             break;
           case 3:
@@ -230,17 +220,14 @@ class HomePage extends StatelessWidget {
               textAlign: TextAlign.center,
               controller: viewModel.memoController,
             );
-            button = SizedBox(
-              width: double.infinity,
-              child: GiftyButton(
-                buttonText: '완료',
-                isEnabled: true,
-                buttonTap: () {
-                  // TODO: Save all the data
-                  Navigator.pop(context);
-                },
-                height: 50,
-              ),
+            button = GiftyButton(
+              buttonText: '완료',
+              isEnabled: true,
+              buttonTap: () {
+                // TODO: Save all the data
+                Navigator.pop(context);
+              },
+              height: 50,
             );
             break;
           default:
@@ -256,6 +243,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 상단 타이틀 + 뒤로가기
                 Row(
                   children: [
                     GestureDetector(
@@ -286,21 +274,19 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 76), // <-- 여기 수정 (40 → 76)
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      mainContent,
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 33.0),
-                          child: button,
-                        ),
-                      ),
-                    ],
-                  ),
+
+                // 제목과 mainContent 사이 간격 76
+                const SizedBox(height: 76),
+
+                // 메인 입력 위젯
+                mainContent,
+
+                const Spacer(),
+
+                // 버튼 하단 고정
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 33.0),
+                  child: SizedBox(width: double.infinity, child: button),
                 ),
               ],
             ),
