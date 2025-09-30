@@ -15,15 +15,26 @@ class HomePage extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          top: 74,
-          left: 72,
-          child: Text(
-            nickname != null ? '"$nickname"님의 교환권' : '닉네임을 불러올 수 없습니다.',
-            style: const TextStyle(
-              fontFamily: 'GumiRomance',
-              fontSize: 15,
-              color: Color(0xFF6A4C4C),
-            ),
+          top: 64,
+          left: 34,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/images/mainImage.svg',
+                width: 30,
+                height: 36,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                nickname != null ? '$nickname님의 교환권' : '닉네임을 불러올 수 없습니다.',
+                style: const TextStyle(
+                  fontFamily: 'GumiRomance',
+                  fontSize: 15,
+                  color: Color(0xFF6A4C4C),
+                ),
+              ),
+            ],
           ),
         ),
       ],
