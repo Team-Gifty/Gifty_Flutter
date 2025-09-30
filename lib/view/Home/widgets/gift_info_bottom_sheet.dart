@@ -82,7 +82,6 @@ class GiftInfoBottomSheet extends StatelessWidget {
               buttonText: '완료',
               isEnabled: true,
               buttonTap: () {
-                viewModel.saveGift();
                 Navigator.pop(context);
               },
               height: 50,
