@@ -149,7 +149,7 @@ class HomePage extends StatelessWidget {
                 buttonText: '등록',
                 backgroundColor: AppColors.inputAfterButtonBg,
                 borderRadius: 12,
-                isEnabled: viewModel.image != null,
+                isEnabled: false,
                 buttonTap: () {
                   // TODO: Implement registration
                 },
