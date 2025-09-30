@@ -19,7 +19,7 @@ class OnboardingPage extends StatelessWidget {
         children: [
           Positioned(
             left: 138,
-            top: 221, // 맨 위에서 221로 변경
+            top: 221,
             child: SvgPicture.asset(
               'assets/images/qwerimage.svg',
               width: 113,

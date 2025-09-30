@@ -2,36 +2,76 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
+import 'package:gifty_flutter/view_model/nickname_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Center(
-      child: Text(
-        'Index 0: Home',
+  Widget _buildHomeWidget(BuildContext context) {
+    final nicknameViewModel = Provider.of<NicknameViewModel>(context);
+    final savedNickname = nicknameViewModel.getSavedNickname();
+    
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            savedNickname != null ? '$savedNickname님, 환영합니다!' : '닉네임이 없습니다',
+            style: const TextStyle(
+              fontFamily: 'MemomentKkukkkuk',
+              fontSize: 24,
+            ),
+          ),
+          const SizedBox(height: 20),
+          if (savedNickname != null)
+            ElevatedButton(
+              onPressed: () {
+                nicknameViewModel.deleteNickname();
+              },
+              child: const Text('닉네임 삭제'),
+            ),
+        ],
       ),
-    ),
-    Center(
+    );
+  }
+
+  Widget _buildPlusWidget() {
+    return const Center(
       child: Text(
         'Index 1: Plus',
       ),
-    ),
-    Center(
+    );
+  }
+
+  Widget _buildSearchWidget() {
+    return const Center(
       child: Text(
         'Index 2: Search',
       ),
-    ),
-  ];
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
 
+    Widget getBodyWidget() {
+      switch (viewModel.selectedIndex) {
+        case 0:
+          return _buildHomeWidget(context);
+        case 1:
+          return _buildPlusWidget();
+        case 2:
+          return _buildSearchWidget();
+        default:
+          return _buildHomeWidget(context);
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: _widgetOptions.elementAt(viewModel.selectedIndex),
+      body: getBodyWidget(),
       bottomNavigationBar: BottomAppBar(
         color: AppColors.background,
         elevation: 0,
