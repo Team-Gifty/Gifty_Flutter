@@ -1,6 +1,4 @@
-import 'package:realm/realm.dart';
-
-part 'user.realm.dart';
+part of 'models.dart';
 
 @RealmModel()
 class _User {
@@ -12,4 +10,6 @@ class _User {
   late DateTime createdAt;
 
   late DateTime updatedAt;
+
+  late List<_Gift> gifts;
 }

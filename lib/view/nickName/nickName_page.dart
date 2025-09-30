@@ -11,56 +11,61 @@ class NicknamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<NicknameViewModel>(context);
+    return ChangeNotifierProvider(
+      create: (context) => NicknameViewModel(Provider.of(context, listen: false)),
+      child: Consumer<NicknameViewModel>(
+        builder: (context, viewModel, child) {
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: SafeArea(
+              child: Column(
+                children: [
+                  const SizedBox(height: 320),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 45.0),
+                    child: Text(
+                      '사용하실 닉네임을 입력해주세요!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'MemomentKkukkkuk',
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 105.0),
+                    child: GiftyTextField(
+                      controller: viewModel.textController,
+                      hintText: '닉네임 입력',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    width: 340,
+                    height: 50,
+                    margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: GiftyButton(
+                      buttonText: '저장',
+                      isEnabled: viewModel.isButtonEnabled,
+                      buttonTap: () async {
+                        await viewModel.saveNickname();
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 320),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 45.0),
-              child: Text(
-                '사용하실 닉네임을 입력해주세요!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'MemomentKkukkkuk',
-                  fontSize: 25,
-                ),
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 40),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 105.0),
-              child: GiftyTextField(
-                controller: viewModel.textController,
-                hintText: '닉네임 입력',
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const Spacer(),
-            Container(
-              width: 340,
-              height: 50,
-              margin: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-              child: GiftyButton(
-                buttonText: '저장',
-                isEnabled: viewModel.isButtonEnabled,
-                buttonTap: () async {
-                  await viewModel.saveNickname();
-                  
-                  if (context.mounted) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

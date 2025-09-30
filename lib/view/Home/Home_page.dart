@@ -18,27 +18,32 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<HomeViewModel>(context);
-
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: _widgetOptions.elementAt(viewModel.selectedIndex),
-      bottomNavigationBar: BottomAppBar(
-        color: AppColors.background,
-        elevation: 0,
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _buildNavItem(viewModel, 0, 'assets/images/homeImage.svg'),
-              const SizedBox(width: 90),
-              _buildNavItem(viewModel, 1, 'assets/images/plusImage.svg'),
-              const SizedBox(width: 90),
-              _buildNavItem(viewModel, 2, 'assets/images/searchImage.svg'),
-            ],
-          ),
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => HomeViewModel(Provider.of(context, listen: false)),
+      child: Consumer<HomeViewModel>(
+        builder: (context, viewModel, child) {
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: _widgetOptions.elementAt(viewModel.selectedIndex),
+            bottomNavigationBar: BottomAppBar(
+              color: AppColors.background,
+              elevation: 0,
+              child: SizedBox(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildNavItem(viewModel, 0, 'assets/images/homeImage.svg'),
+                    const SizedBox(width: 90),
+                    _buildNavItem(viewModel, 1, 'assets/images/plusImage.svg'),
+                    const SizedBox(width: 90),
+                    _buildNavItem(viewModel, 2, 'assets/images/searchImage.svg'),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

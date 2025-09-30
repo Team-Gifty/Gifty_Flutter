@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gifty_flutter/core/theme/app_colors.dart';
+
 import 'package:gifty_flutter/view/widgets/gifty_button.dart';
 import 'package:gifty_flutter/view/widgets/gifty_text_field.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
@@ -82,7 +82,7 @@ class GiftInfoBottomSheet extends StatelessWidget {
               buttonText: '완료',
               isEnabled: true,
               buttonTap: () {
-                // TODO: Save all the data
+                viewModel.saveGift();
                 Navigator.pop(context);
               },
               height: 50,

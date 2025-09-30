@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
-import 'package:gifty_flutter/data/realm/models/user.dart';
+import 'package:gifty_flutter/data/realm/models.dart';
 
 class NicknameViewModel with ChangeNotifier {
   final Realm realm;

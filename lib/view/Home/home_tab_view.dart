@@ -20,7 +20,7 @@ class HomeTabView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/images/image_8-removebg-preview 1',
+                'assets/images/homeImage.svg',
                 width: 30,
                 height: 36,
               ),

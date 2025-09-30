@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
-import 'package:gifty_flutter/data/realm/models/user.dart';
+import 'package:gifty_flutter/data/realm/models.dart';
 import 'package:gifty_flutter/view/Home/Home_page.dart';
 import 'package:gifty_flutter/view/nickname/nickname_page.dart';
 import 'package:provider/provider.dart';

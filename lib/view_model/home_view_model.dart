@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gifty_flutter/data/realm/models/user.dart';
+import 'package:gifty_flutter/data/realm/models.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:realm/realm.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class HomeViewModel with ChangeNotifier {
   final Realm realm;
@@ -106,6 +108,33 @@ class HomeViewModel with ChangeNotifier {
       _bottomSheetStep--;
       notifyListeners();
     }
+  }
+
+  Future<void> saveGift() async {
+    if (!isRegistrationReady || _user == null) {
+      return;
+    }
+
+    final appDocDir = await getApplicationDocumentsDirectory();
+    final imageName = path.basename(_image!.path);
+    final savedImage = await _image!.copy('${appDocDir.path}/$imageName');
+
+    final newGift = Gift(
+      ObjectId(),
+      giftNameController.text,
+      usageController.text,
+      _expiryDate!,
+      savedImage.path,
+      memo: memoController.text.isNotEmpty ? memoController.text : null,
+    );
+
+    realm.write(() {
+      _user!.gifts.add(newGift);
+    });
+
+    _image = null;
+    resetBottomSheetStep();
+    notifyListeners();
   }
 
   @override

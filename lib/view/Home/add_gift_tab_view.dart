@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 import 'package:gifty_flutter/view/Home/widgets/gift_info_bottom_sheet.dart';
 import 'package:gifty_flutter/view/widgets/gifty_button.dart';
@@ -95,9 +95,7 @@ class AddGiftTabView extends StatelessWidget {
                 backgroundColor: AppColors.inputAfterButtonBg,
                 borderRadius: 12,
                 isEnabled: viewModel.isRegistrationReady,
-                buttonTap: () {
-                  // TODO: Implement registration
-                },
+                buttonTap: viewModel.saveGift,
               ),
             ],
           ),
