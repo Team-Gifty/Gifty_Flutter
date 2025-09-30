@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
 
     return Stack(
       children: [
-        /// 닉네임 영역 (좌측 상단)
         Positioned(
           top: 64,
           left: 34,
@@ -96,23 +95,23 @@ class HomePage extends StatelessWidget {
                   ),
                   child: viewModel.image == null
                       ? const Center(
-                          child: Text(
-                            '탭하여 교환권 넣기',
-                            style: TextStyle(
-                              fontFamily: 'OngeulipParkDahyeon',
-                              fontSize: 23,
-                              color: Color(0xFFBFA98A),
-                            ),
-                          ),
-                        )
+                    child: Text(
+                      '탭하여 교환권 넣기',
+                      style: TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 23,
+                        color: Color(0xFFBFA98A),
+                      ),
+                    ),
+                  )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.file(
-                            viewModel.image!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        ),
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.file(
+                      viewModel.image!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 25),
@@ -158,125 +157,102 @@ class HomePage extends StatelessWidget {
     return Consumer<HomeViewModel>(
       builder: (context, viewModel, child) {
         String title;
-        Widget content;
+        Widget mainContent;
+        Widget button;
 
         switch (viewModel.bottomSheetStep) {
           case 0:
             title = '교환권 이름(상품명)을 알려주세요!';
-            content = Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyTextField(
-                    hintText: '여기에 입력하세요',
-                    textAlign: TextAlign.center,
-                    controller: viewModel.giftNameController,
-                  ),
-                ),
-                const SizedBox(height: 51),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyButton(
-                    buttonText: '확인',
-                    isEnabled: viewModel.isGiftNameEntered,
-                    buttonTap: viewModel.nextBottomSheetStep,
-                  ),
-                ),
-              ],
+            mainContent = GiftyTextField(
+              hintText: '여기에 입력하세요',
+              textAlign: TextAlign.center,
+              controller: viewModel.giftNameController,
+            );
+            button = SizedBox(
+              width: double.infinity,
+              child: GiftyButton(
+                buttonText: '확인',
+                isEnabled: viewModel.isGiftNameEntered,
+                buttonTap: viewModel.nextBottomSheetStep,
+                height: 50,
+              ),
             );
             break;
           case 1:
             title = '어디서 사용하나요?';
-            content = Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyTextField(
-                    hintText: '여기에 입력하세요',
-                    textAlign: TextAlign.center,
-                    controller: viewModel.usageController,
-                  ),
-                ),
-                const SizedBox(height: 51),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyButton(
-                    buttonText: '확인',
-                    isEnabled: viewModel.isUsageEntered,
-                    buttonTap: viewModel.nextBottomSheetStep,
-                  ),
-                ),
-              ],
+            mainContent = GiftyTextField(
+              hintText: '여기에 입력하세요',
+              textAlign: TextAlign.center,
+              controller: viewModel.usageController,
+            );
+            button = SizedBox(
+              width: double.infinity,
+              child: GiftyButton(
+                buttonText: '확인',
+                isEnabled: viewModel.isUsageEntered,
+                buttonTap: viewModel.nextBottomSheetStep,
+                height: 50,
+              ),
             );
             break;
           case 2:
             title = '언제까지 써야하나요?';
-            content = Column(
-              children: [
-                ElevatedButton(
-                  child: Text(viewModel.expiryDate == null
-                      ? '날짜 선택'
-                      : '${viewModel.expiryDate!.year}/${viewModel.expiryDate!.month}/${viewModel.expiryDate!.day}'),
-                  onPressed: () async {
-                    final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: viewModel.expiryDate ?? DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2101),
-                    );
-                    if (picked != null && picked != viewModel.expiryDate) {
-                      viewModel.setExpiryDate(picked);
-                    }
-                  },
-                ),
-                const SizedBox(height: 51),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyButton(
-                    buttonText: '확인',
-                    isEnabled: viewModel.isExpiryDateSelected,
-                    buttonTap: viewModel.nextBottomSheetStep,
-                  ),
-                ),
-              ],
+            mainContent = ElevatedButton(
+              child: Text(viewModel.expiryDate == null
+                  ? '날짜 선택'
+                  : '${viewModel.expiryDate!.year}/${viewModel.expiryDate!.month}/${viewModel.expiryDate!.day}'),
+              onPressed: () async {
+                final DateTime? picked = await showDatePicker(
+                  context: context,
+                  initialDate: viewModel.expiryDate ?? DateTime.now(),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2101),
+                );
+                if (picked != null && picked != viewModel.expiryDate) {
+                  viewModel.setExpiryDate(picked);
+                }
+              },
+            );
+            button = SizedBox(
+              width: double.infinity,
+              child: GiftyButton(
+                buttonText: '확인',
+                isEnabled: viewModel.isExpiryDateSelected,
+                buttonTap: viewModel.nextBottomSheetStep,
+                height: 50,
+              ),
             );
             break;
           case 3:
             title = '필요시, 메모를 작성해주세요 :)';
-            content = Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyTextField(
-                    hintText: '여기에 입력하세요',
-                    textAlign: TextAlign.center,
-                    controller: viewModel.memoController,
-                  ),
-                ),
-                const SizedBox(height: 51),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                  child: GiftyButton(
-                    buttonText: '완료',
-                    isEnabled: true, // Always enabled
-                    buttonTap: () {
-                      // TODO: Save all the data
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ],
+            mainContent = GiftyTextField(
+              hintText: '여기에 입력하세요',
+              textAlign: TextAlign.center,
+              controller: viewModel.memoController,
+            );
+            button = SizedBox(
+              width: double.infinity,
+              child: GiftyButton(
+                buttonText: '완료',
+                isEnabled: true,
+                buttonTap: () {
+                  // TODO: Save all the data
+                  Navigator.pop(context);
+                },
+                height: 50,
+              ),
             );
             break;
           default:
             title = '';
-            content = const SizedBox.shrink();
+            mainContent = const SizedBox.shrink();
+            button = const SizedBox.shrink();
         }
 
         return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: Padding(
-            padding: const EdgeInsets.only(top: 74, left: 33, right: 33),
+            padding: const EdgeInsets.only(top: 40, left: 45, right: 45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,18 +273,35 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 41),
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontFamily: 'OngeulipParkDahyeon',
-                        fontSize: 25,
-                        color: Color(0xFF6A4C4C),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontFamily: 'OngeulipParkDahyeon',
+                          fontSize: 25,
+                          color: Color(0xFF6A4C4C),
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 40),
-                content,
+                const SizedBox(height: 76), // <-- 여기 수정 (40 → 76)
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      mainContent,
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 33.0),
+                          child: button,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
