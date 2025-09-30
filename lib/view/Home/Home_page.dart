@@ -239,7 +239,7 @@ class HomePage extends StatelessWidget {
         return SizedBox(
           height: MediaQuery.of(context).size.height * 0.8,
           child: Padding(
-            padding: const EdgeInsets.only(top: 40, left: 45, right: 45),
+            padding: const EdgeInsets.only(top: 40, left: 30, right: 45),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -260,7 +260,7 @@ class HomePage extends StatelessWidget {
                         height: 20.5,
                       ),
                     ),
-                    const SizedBox(width: 41),
+                    const SizedBox(width: 32),
                     Expanded(
                       child: Text(
                         title,
