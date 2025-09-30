@@ -85,7 +85,6 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  print("Tapped!");
                   viewModel.pickImage();
                 },
                 child: Container(
@@ -118,8 +117,9 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 25),
               GiftyButton(
                 buttonText: '정보 작성하기',
-                backgroundColor: const Color(0xFFFCEDD0),
+                backgroundColor: AppColors.inputAfterButtonBg,
                 borderRadius: 12,
+                isEnabled: viewModel.image != null,
                 buttonTap: () {
                   // TODO: Implement navigation
                 },
@@ -127,8 +127,9 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16),
               GiftyButton(
                 buttonText: '등록',
-                backgroundColor: const Color(0xFFFCEDD0),
+                backgroundColor: AppColors.inputAfterButtonBg,
                 borderRadius: 12,
+                isEnabled: viewModel.image != null,
                 buttonTap: () {
                   // TODO: Implement registration
                 },
