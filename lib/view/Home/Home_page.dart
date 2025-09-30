@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
+import 'package:gifty_flutter/view/widgets/gifty_text_field.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:gifty_flutter/view/widgets/gifty_button.dart';
@@ -121,7 +122,14 @@ class HomePage extends StatelessWidget {
                 borderRadius: 12,
                 isEnabled: viewModel.image != null,
                 buttonTap: () {
-                  // TODO: Implement navigation
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: const Color(0xFFFFF7EC),
+                    builder: (BuildContext context) {
+                      return _buildBottomSheetContent(context);
+                    },
+                  );
                 },
               ),
               const SizedBox(height: 16),
@@ -138,6 +146,49 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildBottomSheetContent(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 74, left: 33, right: 33),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: SvgPicture.asset(
+                    'assets/images/backButton.svg',
+                    width: 33,
+                    height: 20.5,
+                  ),
+                ),
+                const SizedBox(width: 41),
+                const Text(
+                  '교환권 이름(상품명)을 알려주세요!',
+                  style: TextStyle(
+                    fontFamily: 'OngeulipParkDahyeon',
+                    fontSize: 25,
+                    color: Color(0xFF6A4C4C),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 45.0),
+              child: GiftyTextField(
+                hintText: '여기에 입력하세요',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
