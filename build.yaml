@@ -1,0 +1,10 @@
+targets:
+  $default:
+    builders:
+      realm:realm_generator:
+        enabled: false
+      realm_generator:
+        generate_for:
+          - lib/**/*.dart
+        options:
+          enabled: true
