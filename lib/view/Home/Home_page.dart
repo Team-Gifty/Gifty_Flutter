@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
-import 'package:gifty_flutter/view_model/nickname_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,6 +13,7 @@ class HomePage extends StatelessWidget {
 
     return Stack(
       children: [
+        /// 닉네임 영역 (좌측 상단)
         Positioned(
           top: 64,
           left: 34,
@@ -35,6 +35,14 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+
+        Center(
+          child: SvgPicture.asset(
+            'assets/images/bigBox.svg',
+            width: 124.11,
+            height: 113,
           ),
         ),
       ],
