@@ -3,7 +3,7 @@ import 'package:gifty_flutter/view/onboarding/onboarding_page.dart';
 import 'package:gifty_flutter/core/theme/theme.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:gifty_flutter/view_model/nickname_view_model.dart';
-import 'package:gifty_flutter/view_model/onboarding_view_model.dart';
+
 import 'package:provider/provider.dart';
 import 'package:realm/realm.dart';
 import 'package:gifty_flutter/data/realm/models/user.dart';
@@ -35,7 +35,7 @@ void main() async {
         Provider<Realm>.value(value: realm),
         ChangeNotifierProvider(create: (context) => HomeViewModel(context.read<Realm>())),
         ChangeNotifierProvider(create: (context) => NicknameViewModel(context.read<Realm>())),
-        ChangeNotifierProvider(create: (_) => OnboardingViewModel()),
+
       ],
       child: const MyApp(),
     ),
