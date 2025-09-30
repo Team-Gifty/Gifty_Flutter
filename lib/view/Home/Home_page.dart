@@ -63,7 +63,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildPlusWidget() {
+  Widget _buildPlusWidget(BuildContext context) {
+    final viewModel = Provider.of<HomeViewModel>(context);
     return Stack(
       children: [
         Positioned(
@@ -84,7 +85,8 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  // TODO: Implement image picking logic
+                  print("Tapped!");
+                  viewModel.pickImage();
                 },
                 child: Container(
                   height: 323,
@@ -92,16 +94,25 @@ class HomePage extends StatelessWidget {
                     color: const Color(0xFFF7EAD8),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: const Center(
-                    child: Text(
-                      '탭하여 교환권 넣기',
-                      style: TextStyle(
-                        fontFamily: 'OngeulipParkDahyeon',
-                        fontSize: 23,
-                        color: Color(0xFFBFA98A),
-                      ),
-                    ),
-                  ),
+                  child: viewModel.image == null
+                      ? const Center(
+                          child: Text(
+                            '탭하여 교환권 넣기',
+                            style: TextStyle(
+                              fontFamily: 'OngeulipParkDahyeon',
+                              fontSize: 23,
+                              color: Color(0xFFBFA98A),
+                            ),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.file(
+                            viewModel.image!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 25),
@@ -146,7 +157,7 @@ class HomePage extends StatelessWidget {
         case 0:
           return _buildHomeWidget(context);
         case 1:
-          return _buildPlusWidget();
+          return _buildPlusWidget(context);
         case 2:
           return _buildSearchWidget();
         default:

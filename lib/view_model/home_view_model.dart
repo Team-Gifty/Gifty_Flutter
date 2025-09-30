@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/data/realm/models/user.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:realm/realm.dart';
 
 class HomeViewModel with ChangeNotifier {
@@ -24,6 +26,21 @@ class HomeViewModel with ChangeNotifier {
   void onItemTapped(int index) {
     _selectedIndex = index;
     notifyListeners();
+  }
+
+  File? _image;
+  File? get image => _image;
+
+  Future<void> pickImage() async {
+    print("pickImage called");
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    print("Image picked: ${pickedFile?.path}");
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      notifyListeners();
+    }
   }
 
   @override

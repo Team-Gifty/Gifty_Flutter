@@ -17,14 +17,12 @@ void main() async {
   final appDocumentsDirectory = await getApplicationDocumentsDirectory();
   final realmPath = path.join(appDocumentsDirectory.path, 'gifty.realm');
 
-  // Realm 초기화
   final config = Configuration.local(
     [User.schema],
     path: realmPath,
   );
   final realm = Realm(config);
   
-  // Realm 파일 경로 출력 (Realm Studio에서 열기 위해)
   print('==============================================');
   print('Realm Database Path: ${realm.config.path}');
   print('==============================================');

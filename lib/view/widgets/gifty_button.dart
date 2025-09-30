@@ -23,7 +23,7 @@ class GiftyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
-      width: double.infinity, // Stretch to full width
+      width: double.infinity,
       child: ElevatedButton(
         onPressed: isEnabled ? buttonTap : null,
         style: ElevatedButton.styleFrom(
@@ -38,7 +38,7 @@ class GiftyButton extends StatelessWidget {
             fontFamily: 'MemomentKkukkkuk',
             fontSize: 23,
           ),
-          elevation: 0, // To match the iOS look
+          elevation: 0,
         ),
         child: Text(buttonText),
       ),

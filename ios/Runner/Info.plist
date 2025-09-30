@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to the photo library to let you select a gift voucher image.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera to let you take a picture of a gift voucher.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to the microphone if you want to record a video of a gift voucher.</string>
 </dict>
 </plist>

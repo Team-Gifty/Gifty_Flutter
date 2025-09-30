@@ -48,10 +48,8 @@ class NicknamePage extends StatelessWidget {
                 buttonText: '저장',
                 isEnabled: viewModel.isButtonEnabled,
                 buttonTap: () async {
-                  // Realm에 닉네임 저장
                   await viewModel.saveNickname();
                   
-                  // 홈 페이지로 이동
                   if (context.mounted) {
                     Navigator.pushReplacement(
                       context,
