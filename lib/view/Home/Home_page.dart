@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/images/mainImage.svg',
+                'assets/images/Group 47',
                 width: 30,
                 height: 36,
               ),
