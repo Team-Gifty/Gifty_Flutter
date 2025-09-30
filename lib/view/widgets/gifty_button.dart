@@ -6,6 +6,8 @@ class GiftyButton extends StatelessWidget {
   final VoidCallback? buttonTap;
   final bool isEnabled;
   final double height;
+  final Color? backgroundColor;
+  final double? borderRadius;
 
   const GiftyButton({
     super.key,
@@ -13,6 +15,8 @@ class GiftyButton extends StatelessWidget {
     this.buttonTap,
     this.isEnabled = true,
     this.height = 47.0,
+    this.backgroundColor,
+    this.borderRadius,
   });
 
   @override
@@ -23,12 +27,12 @@ class GiftyButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isEnabled ? buttonTap : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.inputAfterButtonBg,
+          backgroundColor: backgroundColor ?? AppColors.inputAfterButtonBg,
           disabledBackgroundColor: AppColors.inputBeforeButtonBg,
           foregroundColor: AppColors.inputAfterButton,
           disabledForegroundColor: AppColors.inputBeforeButton,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           ),
           textStyle: const TextStyle(
             fontFamily: 'MemomentKkukkkuk',

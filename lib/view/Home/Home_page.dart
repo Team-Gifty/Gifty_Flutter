@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:gifty_flutter/view/widgets/gifty_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -67,8 +68,8 @@ class HomePage extends StatelessWidget {
       children: [
         Positioned(
           top: 119,
-          left: 52,
-          right: 52,
+          left: 45,
+          right: 45,
           child: Column(
             children: [
               const Text(
@@ -102,6 +103,24 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(height: 25),
+              GiftyButton(
+                buttonText: '정보 작성하기',
+                backgroundColor: const Color(0xFFFCEDD0),
+                borderRadius: 12,
+                buttonTap: () {
+                  // TODO: Implement navigation
+                },
+              ),
+              const SizedBox(height: 16),
+              GiftyButton(
+                buttonText: '등록',
+                backgroundColor: const Color(0xFFFCEDD0),
+                borderRadius: 12,
+                buttonTap: () {
+                  // TODO: Implement registration
+                },
               ),
             ],
           ),
