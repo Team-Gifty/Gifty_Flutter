@@ -32,10 +32,10 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => HomeViewModel()),
-        ChangeNotifierProvider(create: (_) => NicknameViewModel()),
-        ChangeNotifierProvider(create: (_) => OnboardingViewModel()),
         Provider<Realm>.value(value: realm),
+        ChangeNotifierProvider(create: (context) => HomeViewModel(context.read<Realm>())),
+        ChangeNotifierProvider(create: (context) => NicknameViewModel(context.read<Realm>())),
+        ChangeNotifierProvider(create: (_) => OnboardingViewModel()),
       ],
       child: const MyApp(),
     ),

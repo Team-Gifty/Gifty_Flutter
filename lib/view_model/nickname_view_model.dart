@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gifty_flutter/data/realm/realm_service.dart';
+import 'package:realm/realm.dart';
+import 'package:gifty_flutter/data/realm/models/user.dart';
 
 class NicknameViewModel with ChangeNotifier {
+  final Realm realm;
   final TextEditingController _textController = TextEditingController();
-  final RealmService _realmService = RealmService.getInstance();
   bool _isButtonEnabled = false;
 
-  NicknameViewModel() {
+  NicknameViewModel(this.realm) {
     _textController.addListener(() {
       isButtonEnabled = _textController.text.isNotEmpty;
     });
@@ -23,22 +24,30 @@ class NicknameViewModel with ChangeNotifier {
     }
   }
 
-  // 닉네임 저장
-  void saveNickname() {
+  Future<void> saveNickname() async {
     if (_textController.text.isNotEmpty) {
-      _realmService.saveUser(_textController.text);
-      notifyListeners();
+      final nickname = _textController.text;
+      await realm.write(() {
+        final now = DateTime.now();
+        final existingUser = realm.all<User>().firstOrNull;
+        if (existingUser != null) {
+          existingUser.nickname = nickname;
+          existingUser.updatedAt = now;
+        } else {
+          realm.add(User(ObjectId(), nickname, now, now));
+        }
+      });
     }
   }
 
-  // 저장된 닉네임 가져오기
   String? getSavedNickname() {
-    return _realmService.getNickname();
+    return realm.all<User>().firstOrNull?.nickname;
   }
 
-  // 닉네임 삭제
   void deleteNickname() {
-    _realmService.deleteUser();
+    realm.write(() {
+      realm.deleteAll<User>();
+    });
     _textController.clear();
     notifyListeners();
   }

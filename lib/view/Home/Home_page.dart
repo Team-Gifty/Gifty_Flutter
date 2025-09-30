@@ -9,30 +9,24 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   Widget _buildHomeWidget(BuildContext context) {
-    final nicknameViewModel = Provider.of<NicknameViewModel>(context);
-    final savedNickname = nicknameViewModel.getSavedNickname();
-    
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            savedNickname != null ? '$savedNickname님, 환영합니다!' : '닉네임이 없습니다',
+    final viewModel = Provider.of<HomeViewModel>(context);
+    final nickname = viewModel.nickname;
+
+    return Stack(
+      children: [
+        Positioned(
+          top: 74,
+          left: 72,
+          child: Text(
+            nickname != null ? '"$nickname"님의 교환권' : '닉네임을 불러올 수 없습니다.',
             style: const TextStyle(
-              fontFamily: 'MemomentKkukkkuk',
-              fontSize: 24,
+              fontFamily: 'GumiRomance',
+              fontSize: 15,
+              color: Color(0xFF6A4C4C),
             ),
           ),
-          const SizedBox(height: 20),
-          if (savedNickname != null)
-            ElevatedButton(
-              onPressed: () {
-                nicknameViewModel.deleteNickname();
-              },
-              child: const Text('닉네임 삭제'),
-            ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
