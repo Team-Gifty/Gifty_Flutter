@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/images/Group 47',
+                'assets/images/image_8-removebg-preview 1',
                 width: 30,
                 height: 36,
               ),
@@ -39,10 +39,23 @@ class HomePage extends StatelessWidget {
         ),
 
         Center(
-          child: SvgPicture.asset(
-            'assets/images/bigBox.svg',
-            width: 124.11,
-            height: 113,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/images/bigBox.svg',
+                width: 124.11,
+                height: 113,
+              ),
+              const Text(
+                '아직 등록된 교환권이 없어요',
+                style: TextStyle(
+                  fontFamily: 'OngeulipParkDahyeon',
+                  fontSize: 28,
+                  color: Color(0xFF7F7D7D),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -50,10 +63,50 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildPlusWidget() {
-    return const Center(
-      child: Text(
-        'Index 1: Plus',
-      ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 119,
+          left: 52,
+          right: 52,
+          child: Column(
+            children: [
+              const Text(
+                '등록할 교환권 이미지를 넣어주세요 :)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'OngeulipParkDahyeon',
+                  fontSize: 25,
+                  color: Color(0xFF6A4C4C),
+                ),
+              ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                onTap: () {
+                  // TODO: Implement image picking logic
+                },
+                child: Container(
+                  height: 323,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF7EAD8),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '탭하여 교환권 넣기',
+                      style: TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 23,
+                        color: Color(0xFFBFA98A),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
