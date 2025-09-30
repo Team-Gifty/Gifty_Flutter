@@ -126,10 +126,15 @@ class HomePage extends StatelessWidget {
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: const Color(0xFFFFF7EC),
-                    builder: (BuildContext context) {
-                      return _buildBottomSheetContent(context);
+                    builder: (BuildContext _) {
+                      return ChangeNotifierProvider.value(
+                        value: viewModel,
+                        child: _buildBottomSheetContent(context),
+                      );
                     },
-                  );
+                  ).whenComplete(() {
+                    viewModel.resetBottomSheetStep();
+                  });
                 },
               ),
               const SizedBox(height: 16),
@@ -150,45 +155,165 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildBottomSheetContent(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 74, left: 33, right: 33),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Consumer<HomeViewModel>(
+      builder: (context, viewModel, child) {
+        String title;
+        Widget content;
+
+        switch (viewModel.bottomSheetStep) {
+          case 0:
+            title = '교환권 이름(상품명)을 알려주세요!';
+            content = Column(
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: SvgPicture.asset(
-                    'assets/images/backButton.svg',
-                    width: 33,
-                    height: 20.5,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyTextField(
+                    hintText: '여기에 입력하세요',
+                    textAlign: TextAlign.center,
+                    controller: viewModel.giftNameController,
                   ),
                 ),
-                const SizedBox(width: 41),
-                const Text(
-                  '교환권 이름(상품명)을 알려주세요!',
-                  style: TextStyle(
-                    fontFamily: 'OngeulipParkDahyeon',
-                    fontSize: 25,
-                    color: Color(0xFF6A4C4C),
+                const SizedBox(height: 51),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyButton(
+                    buttonText: '확인',
+                    isEnabled: viewModel.isGiftNameEntered,
+                    buttonTap: viewModel.nextBottomSheetStep,
                   ),
                 ),
               ],
+            );
+            break;
+          case 1:
+            title = '어디서 사용하나요?';
+            content = Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyTextField(
+                    hintText: '여기에 입력하세요',
+                    textAlign: TextAlign.center,
+                    controller: viewModel.usageController,
+                  ),
+                ),
+                const SizedBox(height: 51),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyButton(
+                    buttonText: '확인',
+                    isEnabled: viewModel.isUsageEntered,
+                    buttonTap: viewModel.nextBottomSheetStep,
+                  ),
+                ),
+              ],
+            );
+            break;
+          case 2:
+            title = '언제까지 써야하나요?';
+            content = Column(
+              children: [
+                ElevatedButton(
+                  child: Text(viewModel.expiryDate == null
+                      ? '날짜 선택'
+                      : '${viewModel.expiryDate!.year}/${viewModel.expiryDate!.month}/${viewModel.expiryDate!.day}'),
+                  onPressed: () async {
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: viewModel.expiryDate ?? DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2101),
+                    );
+                    if (picked != null && picked != viewModel.expiryDate) {
+                      viewModel.setExpiryDate(picked);
+                    }
+                  },
+                ),
+                const SizedBox(height: 51),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyButton(
+                    buttonText: '확인',
+                    isEnabled: viewModel.isExpiryDateSelected,
+                    buttonTap: viewModel.nextBottomSheetStep,
+                  ),
+                ),
+              ],
+            );
+            break;
+          case 3:
+            title = '필요시, 메모를 작성해주세요 :)';
+            content = Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyTextField(
+                    hintText: '여기에 입력하세요',
+                    textAlign: TextAlign.center,
+                    controller: viewModel.memoController,
+                  ),
+                ),
+                const SizedBox(height: 51),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45.0),
+                  child: GiftyButton(
+                    buttonText: '완료',
+                    isEnabled: true, // Always enabled
+                    buttonTap: () {
+                      // TODO: Save all the data
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
+            );
+            break;
+          default:
+            title = '';
+            content = const SizedBox.shrink();
+        }
+
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 74, left: 33, right: 33),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (viewModel.bottomSheetStep == 0) {
+                          Navigator.pop(context);
+                        } else {
+                          viewModel.previousBottomSheetStep();
+                        }
+                      },
+                      child: SvgPicture.asset(
+                        'assets/images/backButton.svg',
+                        width: 33,
+                        height: 20.5,
+                      ),
+                    ),
+                    const SizedBox(width: 41),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 25,
+                        color: Color(0xFF6A4C4C),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                content,
+              ],
             ),
-            const SizedBox(height: 40),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 45.0),
-              child: GiftyTextField(
-                hintText: '여기에 입력하세요',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
