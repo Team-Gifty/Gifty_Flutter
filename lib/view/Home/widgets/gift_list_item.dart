@@ -3,18 +3,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
 import 'package:gifty_flutter/data/realm/models.dart';
+import 'package:path/path.dart' as path;
 
 class GiftListItem extends StatelessWidget {
   final Gift gift;
+  final String documentsPath;
 
-  const GiftListItem({super.key, required this.gift});
+  const GiftListItem(
+      {super.key, required this.gift, required this.documentsPath});
 
   @override
   Widget build(BuildContext context) {
     final month = gift.expiryDate.month.toString().padLeft(2, '0');
     final day = gift.expiryDate.day.toString().padLeft(2, '0');
     final formattedDate = '- ${gift.expiryDate.year}. $month. $day';
-    final imageFile = File(gift.imagePath);
+    final imageFile = File(path.join(documentsPath, gift.imagePath));
 
     return Container(
       height: 89,

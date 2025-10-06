@@ -67,7 +67,10 @@ class HomeTabView extends StatelessWidget {
                   itemCount: viewModel.gifts.length,
                   itemBuilder: (context, index) {
                     final gift = viewModel.gifts[index];
-                    return GiftListItem(gift: gift);
+                    return GiftListItem(
+                      gift: gift,
+                      documentsPath: viewModel.appDocumentsPath,
+                    );
                   },
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                 ),

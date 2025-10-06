@@ -12,6 +12,8 @@ class HomeViewModel with ChangeNotifier {
   late final StreamSubscription<RealmResultsChanges<User>> _userSubscription;
   User? _user;
 
+  String appDocumentsPath = '';
+
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
   String? get nickname => _user?.nickname;
@@ -51,6 +53,11 @@ class HomeViewModel with ChangeNotifier {
     giftNameController.addListener(_onGiftNameChanged);
     usageController.addListener(_onUsageChanged);
     memoController.addListener(_onMemoChanged);
+  }
+
+  Future<void> init() async {
+    final appDocDir = await getApplicationDocumentsDirectory();
+    appDocumentsPath = appDocDir.path;
   }
 
   void _onGiftNameChanged() {
@@ -117,16 +124,15 @@ class HomeViewModel with ChangeNotifier {
       return;
     }
 
-    final appDocDir = await getApplicationDocumentsDirectory();
     final imageName = path.basename(_image!.path);
-    final savedImage = await _image!.copy('${appDocDir.path}/$imageName');
+    final savedImage = await _image!.copy('$appDocumentsPath/$imageName');
 
     final newGift = Gift(
       ObjectId(),
       giftNameController.text,
       usageController.text,
       _expiryDate!,
-      savedImage.path,
+      imageName, // Save only the filename
       memo: memoController.text.isNotEmpty ? memoController.text : null,
     );
 
@@ -136,6 +142,7 @@ class HomeViewModel with ChangeNotifier {
 
     _image = null;
     resetBottomSheetStep();
+    _selectedIndex = 0;
     notifyListeners();
   }
 

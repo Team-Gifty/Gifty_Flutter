@@ -7,8 +7,22 @@ import 'package:gifty_flutter/view/Home/search_tab_view.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late final HomeViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = HomeViewModel(Provider.of(context, listen: false));
+    _viewModel.init();
+  }
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeTabView(),
@@ -18,10 +32,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => HomeViewModel(Provider.of(context, listen: false)),
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
+          if (viewModel.appDocumentsPath.isEmpty) {
+            return const Scaffold(
+              backgroundColor: AppColors.background,
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
           return Scaffold(
             backgroundColor: AppColors.background,
             body: _widgetOptions.elementAt(viewModel.selectedIndex),
