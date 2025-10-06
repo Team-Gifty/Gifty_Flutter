@@ -33,12 +33,35 @@ class GiftDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
+              padding: const EdgeInsets.only(right: 49.58),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/images/trash.svg'),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/images/share.svg'),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/images/chore.svg'),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 11),
+            Padding(
               padding: const EdgeInsets.only(left: 53, right: 49.58),
               child: Container(
                 width: 287,
                 height: 323,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(15),
                   image: imageFile.existsSync()
                       ? DecorationImage(
                           image: FileImage(imageFile),
@@ -46,6 +69,14 @@ class GiftDetailPage extends StatelessWidget {
                         )
                       : null,
                   color: imageFile.existsSync() ? null : Colors.grey[300],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xFFCBBDB1),
+                      offset: Offset(0, 4),
+                      blurRadius: 4,
+                      spreadRadius: 0,
+                    ),
+                  ],
                 ),
                 child: imageFile.existsSync()
                     ? null
@@ -70,15 +101,19 @@ class GiftDetailPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(width: 78),
-          Text(
-            label,
-            style: const TextStyle(
-              fontFamily: 'OngeulipParkDahyeon',
-              fontSize: 22,
-              color: Color(0xFFCDB9AD),
+          SizedBox(
+            width: 90,
+            child: Text(
+              label,
+              textAlign: TextAlign.justify,
+              style: const TextStyle(
+                fontFamily: 'OngeulipParkDahyeon',
+                fontSize: 22,
+                color: Color(0xFFCDB9AD),
+              ),
             ),
           ),
-          const SizedBox(width: 42),
+          const SizedBox(width: 25),
           Expanded(
             child: Text(
               value,
