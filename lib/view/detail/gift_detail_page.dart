@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/data/realm/models.dart';
 import 'package:path/path.dart' as path;
+import 'package:provider/provider.dart';
+import 'package:gifty_flutter/view_model/home_view_model.dart';
+import 'package:gifty_flutter/view/detail/widgets/delete_confirmation_dialog.dart';
 
 class GiftDetailPage extends StatelessWidget {
   final Gift gift;
@@ -38,7 +41,13 @@ class GiftDetailPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final viewModel = Provider.of<HomeViewModel>(context, listen: false);
+                      showDialog(
+                        context: context,
+                        builder: (context) => DeleteConfirmationDialog(gift: gift, viewModel: viewModel),
+                      );
+                    },
                     icon: SvgPicture.asset(
                       'assets/images/trash.svg',
                       width: 33,

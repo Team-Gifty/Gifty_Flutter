@@ -126,6 +126,13 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
+  Future<void> deleteGift(Gift gift) async {
+    realm.write(() {
+      realm.delete(gift);
+    });
+    notifyListeners();
+  }
+
   Future<void> saveGift() async {
     if (!isRegistrationReady || _user == null) {
       return;

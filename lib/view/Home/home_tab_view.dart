@@ -73,9 +73,12 @@ class HomeTabView extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GiftDetailPage(
-                              gift: gift,
-                              documentsPath: viewModel.appDocumentsPath,
+                            builder: (newContext) => ChangeNotifierProvider.value(
+                              value: viewModel,
+                              child: GiftDetailPage(
+                                gift: gift,
+                                documentsPath: viewModel.appDocumentsPath,
+                              ),
                             ),
                           ),
                         );
