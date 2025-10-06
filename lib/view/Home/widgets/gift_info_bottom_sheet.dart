@@ -69,19 +69,17 @@ class GiftInfoBottomSheet extends StatelessWidget {
                       color: const Color(0xFFF7EAD8),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 14.0),
-                          child: SvgPicture.asset(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
                             'assets/images/calender.svg',
                             width: 45,
                             height: 45,
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 45),
-                          child: Text(
+                          const SizedBox(height: 8),
+                          const Text(
                             '클릭하여 날짜 선택',
                             style: TextStyle(
                               fontFamily: 'OngeulipParkDahyeon',
@@ -89,23 +87,20 @@ class GiftInfoBottomSheet extends StatelessWidget {
                               color: Color(0xFF6A4C4C),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 if (viewModel.isExpiryDateSelected)
                   Padding(
                     padding: const EdgeInsets.only(top: 9),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 107.5),
-                      child: Text(
-                        '${viewModel.expiryDate!.year}.${viewModel.expiryDate!.month.toString().padLeft(2, '0')}.${viewModel.expiryDate!.day.toString().padLeft(2, '0')}',
-                        style: const TextStyle(
-                          fontFamily: 'OngeulipParkDahyeon',
-                          fontSize: 23,
-                          color: Color(0xFF6A4C4C),
-                        ),
+                    child: Text(
+                      '${viewModel.expiryDate!.year}.${viewModel.expiryDate!.month.toString().padLeft(2, '0')}.${viewModel.expiryDate!.day.toString().padLeft(2, '0')}',
+                      style: const TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 23,
+                        color: Color(0xFF6A4C4C),
                       ),
                     ),
                   ),
@@ -142,48 +137,49 @@ class GiftInfoBottomSheet extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.only(top: 40, left: 30, right: 45),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (viewModel.bottomSheetStep == 0) {
-                          Navigator.pop(context);
-                        } else {
-                          viewModel.previousBottomSheetStep();
-                        }
-                      },
-                      child: SvgPicture.asset(
-                        'assets/images/backButton.svg',
-                        width: 33,
-                        height: 20.5,
-                      ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      if (viewModel.bottomSheetStep == 0) {
+                        Navigator.pop(context);
+                      } else {
+                        viewModel.previousBottomSheetStep();
+                      }
+                    },
+                    child: SvgPicture.asset(
+                      'assets/images/backButton.svg',
+                      width: 33,
+                      height: 20.5,
                     ),
-                    const SizedBox(width: 32),
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontFamily: 'OngeulipParkDahyeon',
-                          fontSize: 25,
-                          color: Color(0xFF6A4C4C),
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(width: 32),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 25,
+                        color: Color(0xFF6A4C4C),
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 60),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: mainContent,
                 ),
-                const SizedBox(height: 60),
-                mainContent,
-                Padding(
-                  padding: const EdgeInsets.only(top: 150.0, bottom: 33.0),
-                  child: SizedBox(width: double.infinity, child: button),
-                ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 100, bottom: 33.0),
+                child: SizedBox(width: double.infinity, child: button),
+              ),
+            ],
           ),
         );
       },

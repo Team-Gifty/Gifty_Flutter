@@ -50,23 +50,23 @@ class AddGiftTabView extends StatelessWidget {
                   ),
                   child: viewModel.image == null
                       ? const Center(
-                          child: Text(
-                            '탭하여 교환권 넣기',
-                            style: TextStyle(
-                              fontFamily: 'OngeulipParkDahyeon',
-                              fontSize: 23,
-                              color: Color(0xFFBFA98A),
-                            ),
-                          ),
-                        )
+                    child: Text(
+                      '탭하여 교환권 넣기',
+                      style: TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 23,
+                        color: Color(0xFFBFA98A),
+                      ),
+                    ),
+                  )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.file(
-                            viewModel.image!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        ),
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.file(
+                      viewModel.image!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 25),
@@ -83,7 +83,10 @@ class AddGiftTabView extends StatelessWidget {
                     builder: (BuildContext _) {
                       return ChangeNotifierProvider.value(
                         value: viewModel,
-                        child: const GiftInfoBottomSheet(),
+                        child: FractionallySizedBox(
+                          heightFactor: 0.8,
+                          child: const GiftInfoBottomSheet(),
+                        ),
                       );
                     },
                   );
