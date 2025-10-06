@@ -1,3 +1,4 @@
+import 'package:gifty_flutter/view/detail/gift_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gifty_flutter/view/Home/widgets/gift_list_item.dart';
@@ -59,7 +60,7 @@ class HomeTabView extends StatelessWidget {
                 ),
               )
             : Positioned(
-                top: 64 + 36 + 32, // Header height + spacing
+                top: 64 + 36 + 16, // Header height + spacing
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -67,12 +68,26 @@ class HomeTabView extends StatelessWidget {
                   itemCount: viewModel.gifts.length,
                   itemBuilder: (context, index) {
                     final gift = viewModel.gifts[index];
-                    return GiftListItem(
-                      gift: gift,
-                      documentsPath: viewModel.appDocumentsPath,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GiftDetailPage(
+                              gift: gift,
+                              documentsPath: viewModel.appDocumentsPath,
+                            ),
+                          ),
+                        );
+                      },
+                      child: GiftListItem(
+                        gift: gift,
+                        documentsPath: viewModel.appDocumentsPath,
+                      ),
                     );
                   },
-                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
                 ),
               ),
       ],
