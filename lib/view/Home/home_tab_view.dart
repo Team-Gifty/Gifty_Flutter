@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gifty_flutter/view/Home/widgets/gift_list_item.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -36,26 +37,41 @@ class HomeTabView extends StatelessWidget {
             ],
           ),
         ),
-        Center(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/images/bigBox.svg',
-                width: 124.11,
-                height: 113,
-              ),
-              const Text(
-                '아직 등록된 교환권이 없어요',
-                style: TextStyle(
-                  fontFamily: 'OngeulipParkDahyeon',
-                  fontSize: 28,
-                  color: Color(0xFF7F7D7D),
+        viewModel.gifts.isEmpty
+            ? Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/bigBox.svg',
+                      width: 124.11,
+                      height: 113,
+                    ),
+                    const Text(
+                      '아직 등록된 교환권이 없어요',
+                      style: TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 28,
+                        color: Color(0xFF7F7D7D),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Positioned(
+                top: 64 + 36 + 32, // Header height + spacing
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: ListView.separated(
+                  itemCount: viewModel.gifts.length,
+                  itemBuilder: (context, index) {
+                    final gift = viewModel.gifts[index];
+                    return GiftListItem(gift: gift);
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
                 ),
               ),
-            ],
-          ),
-        ),
       ],
     );
   }

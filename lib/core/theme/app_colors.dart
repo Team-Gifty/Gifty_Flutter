@@ -44,6 +44,9 @@ class AppColors {
   /// 배경색 - FFF7EC
   static const Color background = Color(0xFFFFF7EC);
 
+  /// 교환권 셀 배경색 - FFFEF7
+  static const Color giftCellBackground = Color(0xFFFFFEF7);
+
   // Additional Colors
   /// 흰색
   static const Color white = Color(0xFFFFFFFF);
