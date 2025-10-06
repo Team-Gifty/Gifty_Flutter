@@ -16,6 +16,8 @@ class HomeViewModel with ChangeNotifier {
   int get selectedIndex => _selectedIndex;
   String? get nickname => _user?.nickname;
 
+  List<Gift> get gifts => _user?.gifts ?? [];
+
   File? _image;
   File? get image => _image;
 

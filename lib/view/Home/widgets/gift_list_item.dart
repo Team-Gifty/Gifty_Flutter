@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gifty_flutter/core/theme/app_colors.dart';
-import 'package:gifty_flutter/data/realm/gift.dart';
+import 'package:gifty_flutter/data/realm/models.dart';
 
 class GiftListItem extends StatelessWidget {
   final Gift gift;
@@ -9,6 +11,11 @@ class GiftListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final month = gift.expiryDate.month.toString().padLeft(2, '0');
+    final day = gift.expiryDate.day.toString().padLeft(2, '0');
+    final formattedDate = '- ${gift.expiryDate.year}. $month. $day';
+    final imageFile = File(gift.imagePath);
+
     return Container(
       height: 89,
       margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -23,11 +30,19 @@ class GiftListItem extends StatelessWidget {
             left: 13,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(3),
-              child: Container( // Placeholder for the image
-                width: 73.3,
-                height: 73.3,
-                color: Colors.grey[300],
-              ),
+              child: imageFile.existsSync()
+                  ? Image.file(
+                      imageFile,
+                      width: 73.3,
+                      height: 73.3,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      width: 73.3,
+                      height: 73.3,
+                      color: Colors.grey[300],
+                      child: const Icon(Icons.error, color: Colors.white),
+                    ),
             ),
           ),
           Positioned(
@@ -48,7 +63,7 @@ class GiftListItem extends StatelessWidget {
             top: 15 + 11 + 11, // gift name (11) + spacing (11)
             left: 13 + 73.3 + 20,
             child: Text(
-              gift.vendor,
+              gift.usage,
               style: const TextStyle(
                 fontFamily: 'OngeulipConcon',
                 fontSize: 9,
@@ -60,9 +75,7 @@ class GiftListItem extends StatelessWidget {
             bottom: 9,
             right: 12,
             child: Text(
-              // Assuming expiryDate is a DateTime object.
-              // You might need to format it.
-              '${gift.expiryDate.year}.${gift.expiryDate.month}.${gift.expiryDate.day}',
+              formattedDate,
               style: const TextStyle(
                 fontFamily: 'OngeulipConcon',
                 fontSize: 12,
