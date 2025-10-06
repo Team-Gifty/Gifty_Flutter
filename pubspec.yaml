@@ -67,7 +67,16 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/images/
+    - assets/images/backButton.svg
+    - assets/images/bigBox.svg
+    - assets/images/check.svg
+    - assets/images/chore.svg
+    - assets/images/homeImage.svg
+    - assets/images/plusImage.svg
+    - assets/images/qwerimage.svg
+    - assets/images/searchImage.svg
+    - assets/images/share.svg
+    - assets/images/trash.svg
   fonts:
     - family: OngeulipParkDahyeon
       fonts:

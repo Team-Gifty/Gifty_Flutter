@@ -19,7 +19,7 @@ class GiftDetailPage extends StatelessWidget {
         '${gift.expiryDate.year}.${gift.expiryDate.month.toString().padLeft(2, '0')}.${gift.expiryDate.day.toString().padLeft(2, '0')}';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFFFF7EC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -39,17 +39,29 @@ class GiftDetailPage extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('assets/images/trash.svg'),
+                    icon: SvgPicture.asset(
+                      'assets/images/trash.svg',
+                      width: 33,
+                      height: 33,
+                    ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 4),
                   IconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('assets/images/share.svg'),
+                    icon: SvgPicture.asset(
+                      'assets/images/share.svg',
+                      width: 33,
+                      height: 33,
+                    ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 4),
                   IconButton(
                     onPressed: () {},
-                    icon: SvgPicture.asset('assets/images/chore.svg'),
+                    icon: SvgPicture.asset(
+                      'assets/images/chore.svg',
+                      width: 33,
+                      height: 33,
+                    ),
                   ),
                 ],
               ),

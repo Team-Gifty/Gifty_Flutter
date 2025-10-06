@@ -16,6 +16,9 @@ class HomeViewModel with ChangeNotifier {
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
+
+  bool _giftJustSaved = false;
+  bool get giftJustSaved => _giftJustSaved;
   String? get nickname => _user?.nickname;
 
   List<Gift> get gifts => _user?.gifts ?? [];
@@ -89,6 +92,10 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void resetGiftJustSaved() {
+    _giftJustSaved = false;
+  }
+
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -143,6 +150,7 @@ class HomeViewModel with ChangeNotifier {
     _image = null;
     resetBottomSheetStep();
     _selectedIndex = 0;
+    _giftJustSaved = true;
     notifyListeners();
   }
 

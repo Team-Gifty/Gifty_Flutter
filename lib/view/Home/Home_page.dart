@@ -6,6 +6,7 @@ import 'package:gifty_flutter/view/Home/home_tab_view.dart';
 import 'package:gifty_flutter/view/Home/search_tab_view.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:gifty_flutter/view/Home/widgets/success_toast.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,6 +37,23 @@ class _HomePageState extends State<HomePage> {
       value: _viewModel,
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
+          if (viewModel.giftJustSaved) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showDialog(
+                context: context,
+                builder: (context) => const SuccessToast(),
+              ).then((_) {
+                // This is called when the dialog is dismissed.
+              });
+              Future.delayed(const Duration(seconds: 2), () {
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
+              });
+              viewModel.resetGiftJustSaved();
+            });
+          }
+
           if (viewModel.appDocumentsPath.isEmpty) {
             return const Scaffold(
               backgroundColor: AppColors.background,
