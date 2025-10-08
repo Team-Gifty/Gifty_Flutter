@@ -45,38 +45,6 @@ class _HomeTabViewState extends State<HomeTabView> {
             ],
           ),
         ),
-        Positioned(
-          top: 56,
-          right: 33,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _showSortOptions = !_showSortOptions;
-                  });
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      viewModel.sortOrder == SortOrder.expiryDate ? '짧은 유효기간 순' : '최근 등록 순',
-                      style: const TextStyle(
-                        fontFamily: 'OngeulipParkDahyeon',
-                        fontSize: 16,
-                        color: Color(0xFF6A4C4C),
-                      ),
-                    ),
-                    const SizedBox(width: 7),
-                    SvgPicture.asset('assets/images/arrowDown.svg', width: 16, height: 16), // 아이콘 추가
-                  ],
-                ),
-              ),
-              if (_showSortOptions)
-                _buildSortOptionsContainer(context, viewModel),
-            ],
-          ),
-        ),
         viewModel.gifts.isEmpty
             ? Center(
                 child: Stack(
@@ -132,6 +100,38 @@ class _HomeTabViewState extends State<HomeTabView> {
                       const SizedBox(height: 10),
                 ),
               ),
+        Positioned(
+          top: 100,
+          right: 33,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showSortOptions = !_showSortOptions;
+                  });
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      viewModel.sortOrder == SortOrder.expiryDate ? '짧은 유효기간 순' : '최근 등록 순',
+                      style: const TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 16,
+                        color: Color(0xFF6A4C4C),
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    const Icon(Icons.arrow_drop_down, color: Color(0xFF6A4C4C), size: 24),
+                  ],
+                ),
+              ),
+              if (_showSortOptions)
+                _buildSortOptionsContainer(context, viewModel),
+            ],
+          ),
+        ),
       ],
     );
   }
