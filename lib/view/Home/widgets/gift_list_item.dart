@@ -25,6 +25,14 @@ class GiftListItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.giftCellBackground,
         borderRadius: BorderRadius.circular(3),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x40595959), // 595959 with 25% opacity
+            spreadRadius: 0,
+            blurRadius: 2,
+            offset: const Offset(1, 2.5), // x: 1, y: 2.5
+          ),
+        ],
       ),
       child: Stack(
         children: [
