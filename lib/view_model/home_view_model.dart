@@ -7,6 +7,11 @@ import 'package:realm/realm.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
+enum SortOrder {
+  expiryDate,
+  registrationDate,
+}
+
 class HomeViewModel with ChangeNotifier {
   final Realm realm;
   late final StreamSubscription<RealmResultsChanges<User>> _userSubscription;
@@ -17,11 +22,22 @@ class HomeViewModel with ChangeNotifier {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
 
+  SortOrder _sortOrder = SortOrder.expiryDate;
+  SortOrder get sortOrder => _sortOrder;
+
   bool _giftJustSaved = false;
   bool get giftJustSaved => _giftJustSaved;
   String? get nickname => _user?.nickname;
 
-  List<Gift> get gifts => _user?.gifts ?? [];
+  List<Gift> get gifts {
+    final giftList = _user?.gifts.toList() ?? [];
+    if (_sortOrder == SortOrder.expiryDate) {
+      giftList.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
+    } else {
+      giftList.sort((a, b) => b.id.timestamp.compareTo(a.id.timestamp));
+    }
+    return giftList;
+  }
 
   File? _image;
   File? get image => _image;
@@ -75,6 +91,11 @@ class HomeViewModel with ChangeNotifier {
       _isUsageEntered = usageController.text.isNotEmpty;
       notifyListeners();
     }
+  }
+
+  void setSortOrder(SortOrder order) {
+    _sortOrder = order;
+    notifyListeners();
   }
 
   void setExpiryDate(DateTime date) {

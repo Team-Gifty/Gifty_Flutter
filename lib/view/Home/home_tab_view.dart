@@ -5,8 +5,15 @@ import 'package:gifty_flutter/view/Home/widgets/gift_list_item.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeTabView extends StatelessWidget {
+class HomeTabView extends StatefulWidget {
   const HomeTabView({super.key});
+
+  @override
+  State<HomeTabView> createState() => _HomeTabViewState();
+}
+
+class _HomeTabViewState extends State<HomeTabView> {
+  bool _showSortOptions = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +40,40 @@ class HomeTabView extends StatelessWidget {
                   fontFamily: 'GumiRomance',
                   fontSize: 15,
                   color: Color(0xFF6A4C4C),
+                ), 
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 56,
+          right: 33,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showSortOptions = !_showSortOptions;
+                  });
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      viewModel.sortOrder == SortOrder.expiryDate ? '짧은 유효기간 순' : '최근 등록 순',
+                      style: const TextStyle(
+                        fontFamily: 'OngeulipParkDahyeon',
+                        fontSize: 16,
+                        color: Color(0xFF6A4C4C),
+                      ),
+                    ),
+                    const SizedBox(width: 7),
+                    SvgPicture.asset('assets/images/arrowDown.svg', width: 16, height: 16), // 아이콘 추가
+                  ],
                 ),
               ),
+              if (_showSortOptions)
+                _buildSortOptionsContainer(context, viewModel),
             ],
           ),
         ),
@@ -94,6 +133,50 @@ class HomeTabView extends StatelessWidget {
                 ),
               ),
       ],
+    );
+  }
+
+  Widget _buildSortOptionsContainer(BuildContext context, HomeViewModel viewModel) {
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFDFBF6),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFEFE4D3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSortOption(context, viewModel, '짧은 유효기간 순', SortOrder.expiryDate),
+          const SizedBox(height: 4),
+          _buildSortOption(context, viewModel, '최근 등록 순', SortOrder.registrationDate),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSortOption(BuildContext context, HomeViewModel viewModel, String text, SortOrder order) {
+    final isSelected = viewModel.sortOrder == order;
+    return GestureDetector(
+      onTap: () {
+        viewModel.setSortOrder(order);
+        setState(() {
+          _showSortOptions = false;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        color: Colors.transparent, // Tappable area
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'OngeulipParkDahyeon',
+            fontSize: 16,
+            color: isSelected ? const Color(0xFF6A4C4C) : const Color(0xFFBDBDBD),
+          ),
+        ),
+      ),
     );
   }
 }
