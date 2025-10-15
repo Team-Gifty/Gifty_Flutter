@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import 'package:gifty_flutter/view_model/home_view_model.dart';
 import 'package:gifty_flutter/view/detail/widgets/delete_confirmation_dialog.dart';
+import 'package:gifty_flutter/view/detail/photo_view_page.dart';
 
 class GiftDetailPage extends StatelessWidget {
   final Gift gift;
@@ -76,33 +77,48 @@ class GiftDetailPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 11),
-            Padding(
-              padding: const EdgeInsets.only(left: 53, right: 49.58),
-              child: Container(
-                width: 287,
-                height: 323,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: imageFile.existsSync()
-                      ? DecorationImage(
-                          image: FileImage(imageFile),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                  color: imageFile.existsSync() ? null : Colors.grey[300],
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0xFFCBBDB1),
-                      offset: Offset(0, 4),
-                      blurRadius: 4,
-                      spreadRadius: 0,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (imageFile.existsSync()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PhotoViewPage(imageFile: imageFile),
+                        ),
+                      );
+                    }
+                  },
+                  child: Container(
+                    width: 287,
+                    height: 323,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: imageFile.existsSync()
+                          ? DecorationImage(
+                              image: FileImage(imageFile),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                      color: imageFile.existsSync() ? null : Colors.grey[300],
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0xFFCBBDB1),
+                          offset: Offset(0, 4),
+                          blurRadius: 4,
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
-                  ],
+                    child: imageFile.existsSync()
+                        ? null
+                        : const Icon(Icons.error, color: Colors.white),
+                  ),
                 ),
-                child: imageFile.existsSync()
-                    ? null
-                    : const Icon(Icons.error, color: Colors.white),
-              ),
+              ],
             ),
             const SizedBox(height: 40),
             _buildDetailRow('상품명', gift.name),
