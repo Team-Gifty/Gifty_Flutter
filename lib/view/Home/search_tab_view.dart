@@ -196,10 +196,10 @@ class _SearchTabViewState extends State<SearchTabView> {
                 ),
               ),
               Expanded(
-                child: _filteredGifts.isEmpty && _searchController.text.isNotEmpty
+                child: _searchController.text.isEmpty
                     ? const Center(
                         child: Text(
-                          '검색 결과가 없습니다.',
+                          '원하는 필터링으로 검색해보세요!',
                           style: TextStyle(
                             fontFamily: 'OngeulipParkDahyeon',
                             fontSize: 22,
@@ -207,18 +207,30 @@ class _SearchTabViewState extends State<SearchTabView> {
                           ),
                         ),
                       )
-                    : ListView.separated(
-                        padding: const EdgeInsets.only(top: 20),
-                        itemCount: _filteredGifts.length,
-                        itemBuilder: (context, index) {
-                          final gift = _filteredGifts[index];
-                          return GiftListItem(
-                            gift: gift,
-                            documentsPath: viewModel.appDocumentsPath,
-                          );
-                        },
-                        separatorBuilder: (context, index) => const SizedBox(height: 10),
-                      ),
+                    : _filteredGifts.isEmpty
+                        ? const Center(
+                            child: Text(
+                              '검색 결과가 없습니다.',
+                              style: TextStyle(
+                                fontFamily: 'OngeulipParkDahyeon',
+                                fontSize: 22,
+                                color: Color(0xFF7F7D7D),
+                              ),
+                            ),
+                          )
+                        : ListView.separated(
+                            padding: const EdgeInsets.only(top: 20),
+                            itemCount: _filteredGifts.length,
+                            itemBuilder: (context, index) {
+                              final gift = _filteredGifts[index];
+                              return GiftListItem(
+                                gift: gift,
+                                documentsPath: viewModel.appDocumentsPath,
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 10),
+                          ),
               ),
             ],
           ),
