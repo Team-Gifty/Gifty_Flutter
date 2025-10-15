@@ -82,6 +82,7 @@ flutter:
     - assets/images/house.svg
     - assets/images/calender.svg
     - assets/images/arrowDown.svg
+    - assets/images/BigLogo.svg
   fonts:
     - family: OngeulipParkDahyeon
       fonts:

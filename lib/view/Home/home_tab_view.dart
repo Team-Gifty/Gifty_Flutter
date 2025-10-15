@@ -29,7 +29,7 @@ class _HomeTabViewState extends State<HomeTabView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                'assets/images/homeImage.svg',
+                'assets/images/BigLogo.svg',
                 width: 30,
                 height: 36,
               ),
